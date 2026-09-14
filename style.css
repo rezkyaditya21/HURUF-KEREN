@@ -432,45 +432,106 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-  flex-wrap: wrap;
+}
+
+.tabs-scroll-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.tab-nav-btn {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.tab-nav-btn:hover:not(:disabled) {
+  color: var(--accent-cyan);
+  border-color: var(--border-hover);
+  background: rgba(0, 240, 255, 0.12);
+  transform: scale(1.08);
+}
+
+.tab-nav-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.tab-nav-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .filter-tabs {
   display: flex;
   align-items: center;
   gap: 8px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  padding: 4px 2px 6px 2px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
+  user-select: none;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 240, 255, 0.3) rgba(255, 255, 255, 0.04);
   flex: 1;
+}
+
+.filter-tabs.grabbing {
+  cursor: grabbing;
+}
+
+.filter-tabs::-webkit-scrollbar {
+  height: 4px;
+}
+
+.filter-tabs::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 9999px;
+}
+
+.filter-tabs::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.3);
+  border-radius: 9999px;
+}
+
+.filter-tabs::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-cyan);
 }
 
 @media (max-width: 768px) {
   .filter-tabs-wrapper {
     flex-direction: column;
     align-items: stretch;
+    gap: 12px;
   }
 
-  .filter-tabs {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding-bottom: 8px;
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-    cursor: grab;
+  .tabs-scroll-container {
+    width: 100%;
   }
 
-  .filter-tabs::-webkit-scrollbar {
-    height: 4px;
-    display: block;
-  }
-
-  .filter-tabs::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.04);
-    border-radius: 9999px;
-  }
-
-  .filter-tabs::-webkit-scrollbar-thumb {
-    background: var(--border-hover);
-    border-radius: 9999px;
+  .search-mini-box {
+    width: 100%;
   }
 }
 

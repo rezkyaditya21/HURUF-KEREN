@@ -30,7 +30,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2.2">
 </head>
 <body>
 
@@ -130,14 +130,22 @@
 
     <!-- Filter Pills & Search Toolbar -->
     <div class="filter-tabs-wrapper">
-      <div class="filter-tabs" id="category-tabs">
-        <button type="button" class="tab-pill active" data-category="all">✨ Semua (50+)</button>
-        <button type="button" class="tab-pill" data-category="populer">🔥 Paling Populer</button>
-        <button type="button" class="tab-pill" data-category="aesthetic">🌸 Aesthetic & Bio</button>
-        <button type="button" class="tab-pill" data-category="game">🎮 Nickname FF / MLBB</button>
-        <button type="button" class="tab-pill" data-category="gothic">⚔️ Gothic & Fraktur</button>
-        <button type="button" class="tab-pill" data-category="lucu">🧸 Lucu & Bucin</button>
-        <button type="button" class="tab-pill" data-category="glitch">⚡ Glitch & Hacker</button>
+      <div class="tabs-scroll-container">
+        <button type="button" class="tab-nav-btn tab-nav-prev" id="tab-nav-prev" aria-label="Geser ke kiri" title="Geser ke kiri">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="filter-tabs" id="category-tabs">
+          <button type="button" class="tab-pill active" data-category="all">✨ Semua (50+)</button>
+          <button type="button" class="tab-pill" data-category="populer">🔥 Paling Populer</button>
+          <button type="button" class="tab-pill" data-category="aesthetic">🌸 Aesthetic & Bio</button>
+          <button type="button" class="tab-pill" data-category="game">🎮 Nickname FF / MLBB</button>
+          <button type="button" class="tab-pill" data-category="gothic">⚔️ Gothic & Fraktur</button>
+          <button type="button" class="tab-pill" data-category="lucu">🧸 Lucu & Bucin</button>
+          <button type="button" class="tab-pill" data-category="glitch">⚡ Glitch & Hacker</button>
+        </div>
+        <button type="button" class="tab-nav-btn tab-nav-next" id="tab-nav-next" aria-label="Geser ke kanan" title="Geser ke kanan">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
       </div>
 
       <div class="search-mini-box">
@@ -342,6 +350,6 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="app.js"></script>
+  <script src="app.js?v=2.2"></script>
 </body>
 </html>

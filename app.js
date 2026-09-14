@@ -667,13 +667,40 @@
       });
     });
 
-    // Enable horizontal mouse wheel scroll & drag-to-scroll on tabs container
+    // Enable tab navigation buttons, wheel scroll & drag-to-scroll on tabs container
     const categoryTabsContainer = document.getElementById('category-tabs');
+    const tabPrevBtn = document.getElementById('tab-nav-prev');
+    const tabNextBtn = document.getElementById('tab-nav-next');
+
     if (categoryTabsContainer) {
+      const updateTabNavButtons = () => {
+        if (!tabPrevBtn || !tabNextBtn) return;
+        const sl = categoryTabsContainer.scrollLeft;
+        const maxScroll = categoryTabsContainer.scrollWidth - categoryTabsContainer.clientWidth;
+        tabPrevBtn.disabled = sl <= 2;
+        tabNextBtn.disabled = sl >= maxScroll - 2;
+      };
+
+      if (tabPrevBtn) {
+        tabPrevBtn.addEventListener('click', () => {
+          categoryTabsContainer.scrollBy({ left: -220, behavior: 'smooth' });
+        });
+      }
+
+      if (tabNextBtn) {
+        tabNextBtn.addEventListener('click', () => {
+          categoryTabsContainer.scrollBy({ left: 220, behavior: 'smooth' });
+        });
+      }
+
+      categoryTabsContainer.addEventListener('scroll', updateTabNavButtons, { passive: true });
+      window.addEventListener('resize', updateTabNavButtons, { passive: true });
+
       categoryTabsContainer.addEventListener('wheel', e => {
         if (categoryTabsContainer.scrollWidth > categoryTabsContainer.clientWidth && e.deltaY !== 0) {
           e.preventDefault();
-          categoryTabsContainer.scrollLeft += e.deltaY * 0.8;
+          categoryTabsContainer.scrollLeft += e.deltaY * 0.9;
+          updateTabNavButtons();
         }
       }, { passive: false });
 
@@ -683,18 +710,32 @@
 
       categoryTabsContainer.addEventListener('mousedown', e => {
         isDown = true;
+        categoryTabsContainer.classList.add('grabbing');
         startX = e.pageX - categoryTabsContainer.offsetLeft;
         scrollLeft = categoryTabsContainer.scrollLeft;
       });
-      categoryTabsContainer.addEventListener('mouseleave', () => { isDown = false; });
-      categoryTabsContainer.addEventListener('mouseup', () => { isDown = false; });
+
+      const endDrag = () => {
+        if (!isDown) return;
+        isDown = false;
+        categoryTabsContainer.classList.remove('grabbing');
+      };
+
+      categoryTabsContainer.addEventListener('mouseleave', endDrag);
+      categoryTabsContainer.addEventListener('mouseup', endDrag);
+      window.addEventListener('mouseup', endDrag);
+
       categoryTabsContainer.addEventListener('mousemove', e => {
         if (!isDown) return;
         e.preventDefault();
         const x = e.pageX - categoryTabsContainer.offsetLeft;
         const walk = (x - startX) * 1.5;
         categoryTabsContainer.scrollLeft = scrollLeft - walk;
+        updateTabNavButtons();
       });
+
+      // Initial button state
+      setTimeout(updateTabNavButtons, 150);
     }
 
     // Category Tabs
@@ -703,6 +744,9 @@
         DOM.filterTabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
         state.activeCategory = tab.getAttribute('data-category');
+
+        // Scroll tab into view smoothly if partially hidden
+        tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 
         // Toggle Zalgo slider box visibility
         if (state.activeCategory === 'glitch') {
