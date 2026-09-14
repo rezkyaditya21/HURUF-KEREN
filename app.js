@@ -667,6 +667,36 @@
       });
     });
 
+    // Enable horizontal mouse wheel scroll & drag-to-scroll on tabs container
+    const categoryTabsContainer = document.getElementById('category-tabs');
+    if (categoryTabsContainer) {
+      categoryTabsContainer.addEventListener('wheel', e => {
+        if (categoryTabsContainer.scrollWidth > categoryTabsContainer.clientWidth && e.deltaY !== 0) {
+          e.preventDefault();
+          categoryTabsContainer.scrollLeft += e.deltaY * 0.8;
+        }
+      }, { passive: false });
+
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      categoryTabsContainer.addEventListener('mousedown', e => {
+        isDown = true;
+        startX = e.pageX - categoryTabsContainer.offsetLeft;
+        scrollLeft = categoryTabsContainer.scrollLeft;
+      });
+      categoryTabsContainer.addEventListener('mouseleave', () => { isDown = false; });
+      categoryTabsContainer.addEventListener('mouseup', () => { isDown = false; });
+      categoryTabsContainer.addEventListener('mousemove', e => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - categoryTabsContainer.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        categoryTabsContainer.scrollLeft = scrollLeft - walk;
+      });
+    }
+
     // Category Tabs
     DOM.filterTabs.forEach(tab => {
       tab.addEventListener('click', () => {
