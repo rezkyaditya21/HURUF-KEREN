@@ -359,7 +359,7 @@
 
   // --- 6. STATE & DOM ELEMENTS ---
   const state = {
-    inputText: 'JASAKU',
+    inputText: 'HurufKeren',
     activeCategory: 'all',
     searchQuery: '',
     zalgoIntensity: 4,
